@@ -1,47 +1,67 @@
-const pokemonList = document.getElementById('pokemonList')
-const loadMoreButton = document.getElementById('loadMoreButton')
+const pokemonName = document.querySelector('.pokemon__name');
+const pokemonNumber = document.querySelector('.pokemon__number');
+const pokemonImage = document.querySelector('.pokemon__img');
 
-const maxRecords = 151
-const limit = 10
-let offset = 0;
+const form = document.querySelector('.form');
+const input = document.querySelector('.input__search');
 
-function convertPokemonToLi(pokemon) {
-    return `
-        <li class="pokemon ${pokemon.type}">
-            <span class="number">#${pokemon.number}</span>
-            <span class="name">${pokemon.name}</span>
+const buttonPrev = document.querySelector('.btn-prev');
+const buttonNext = document.querySelector('.btn-next');
 
-            <div class="detail">
-                <ol class="types">
-                    ${pokemon.types.map((type) => `<li class="type ${type}">${type}</li>`).join('')}
-                </ol>
+let searchPokemon = 25;
 
-                <img src="${pokemon.photo}"
-                     alt="${pokemon.name}">
-            </div>
-        </li>
-    `
+const fetchPokemon = async (pokemon) => {
+
+    const APIResponse = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}`);
+
+    if (APIResponse.status == 200){
+        const data = await APIResponse.json();
+        return data;
+    }
+
 }
 
-function loadPokemonItens(offset, limit) {
-    pokeApi.getPokemons(offset, limit).then((pokemons = []) => {
-        const newHtml = pokemons.map(convertPokemonToLi).join('')
-        pokemonList.innerHTML += newHtml
-    })
-}
+const renderPokemon = async (pokemon) => {
 
-loadPokemonItens(offset, limit)
+    pokemonName.innerHTML = 'Carregando...';
+    pokemonNumber.innerHTML = '';
 
-loadMoreButton.addEventListener('click', () => {
-    offset += limit
-    const qtdRecordsWithNexPage = offset + limit
+    const data = await fetchPokemon(pokemon);
 
-    if (qtdRecordsWithNexPage >= maxRecords) {
-        const newLimit = maxRecords - offset
-        loadPokemonItens(offset, newLimit)
-
-        loadMoreButton.parentElement.removeChild(loadMoreButton)
+    if (data){
+        pokemonImage.style.display = 'block';
+        pokemonName.innerHTML = data.name;
+        pokemonNumber.innerHTML = data.id;
+        pokemonImage.src = data['sprites']['versions']['generation-v']['black-white']['animated']['front_default'];
+    
+        input.value = '';
+        searchPokemon = data.id;
     } else {
-        loadPokemonItens(offset, limit)
+        pokemonImage.style.display = 'none';
+        pokemonName.innerHTML = 'Não encontrado :c';
+        pokemonNumber.innerHTML = '';
+    }
+
+    
+}
+
+form.addEventListener('submit',(event) => {
+    event.preventDefault();
+
+    renderPokemon(input.value.toLowerCase());
+})
+
+buttonPrev.addEventListener('click', () =>{
+    if(searchPokemon > 1){
+        searchPokemon -= 1;
+        renderPokemon(searchPokemon);
     }
 })
+
+buttonNext.addEventListener('click', () =>{
+    searchPokemon += 1;
+    renderPokemon(searchPokemon);
+})
+
+renderPokemon(searchPokemon);
+
