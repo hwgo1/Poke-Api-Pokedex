@@ -8,7 +8,7 @@
 
 </div>
 
-Bem-vindo ao repositório do projeto Pokedex, uma aplicação web criada como parte de um projeto realizado na plataforma da DIO para aprender a utilizar HTML, CSS, JavaScript e a PokeAPI. Neste projeto, desenvolvi uma Pokedex básica que permite aos usuários explorar informações sobre Pokémon.
+Bem-vindo ao repositório do projeto Pokedex, uma aplicação web criada como parte de um projeto realizado na plataforma da DIO, incrementado com o curso em vídeo do canal Manual do Dev para aprender a utilizar HTML, CSS, JavaScript e a PokeAPI. Neste projeto, desenvolvi uma Pokedex básica que permite aos usuários explorar informações sobre Pokémon.
 
 ### Introduçao
 
@@ -16,7 +16,7 @@ Este projeto foi desenvolvido como parte de um curso acadêmico para aprender e 
 
 ### Funcionalidades
 
-- Lista de Pokemons: Uma lista de Pokémon é exibida na página inicial com seus nomes e imagens em miniatura. Os usuários podem clicar no botão "Ver mais" para carregar mais pokemons.
+- Lista de Pokemons: Uma lista de Pokémon é exibida na página inicial com seus nomes e imagens em miniatura. Os usuários podem clicar no botão "Prev" ou "Next" para carregar mais pokemons.
 
 ### Tecnologias utilizadas
 
